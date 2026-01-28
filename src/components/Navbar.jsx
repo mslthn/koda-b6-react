@@ -2,30 +2,31 @@ import { Link } from "react-router-dom"
 
 const NavigationBar = () => {
     return (
-        <>
-            <nav className="flex flex-row justify-around bg-gray-500/30 p-5 items-center">
+        <div>
+            <nav className="flex flex-row justify-around bg-[#0B090921] p-5 items-center">
                 <div className="flex flex-row gap-15 items-center">
                     <div>
                         <Link to="/" className="flex flex-row">
                             <img src="./src/assets/icons/logo-putih.svg" alt="Logo" />
-                            <p className="font-sacramento">Coffee Shop</p>
+                            <p className="font-[sacramento] text-white">Coffee Shop</p>
                         </Link>
                     </div>
                     <div>
-                        <Link to="/">Home</Link>
+                        <Link to="/" className="text-white">Home</Link>
                     </div>
-                    <div>Products</div>
+                    <div className="text-white">Products</div>
                 </div>
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-row gap-8 items-center">
                     <div><img src="./src/assets/icons/Search.svg" alt="Search Icon" /></div>
                     <div><img src="./src/assets/icons/ShoppingCart.svg" alt="Shoping cart" /></div>
-                    <div>Sign In</div>
+                    <div className="text-white border border-white h-12 w-20 flex items-center justify-center rounded-lg">
+                        <Link to="/login">Sign In</Link></div>
                     <div>
-                        <Link to="/register">Sign Up</Link>
+                        <Link to="/register" className="bg-[#FF8906] h-12 w-20 flex items-center justify-center rounded-lg">Sign Up</Link>
                     </div>
                 </div>
             </nav>
-        </>
+        </div>
     )
 }
 
