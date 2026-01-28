@@ -14,7 +14,9 @@ const NavigationBar = () => {
                     <div>
                         <Link to="/" className="text-white">Home</Link>
                     </div>
-                    <div className="text-white">Products</div>
+                    <div>
+                        <Link to="/products" className="text-white">Products</Link>
+                    </div>
                 </div>
                 <div className="flex flex-row gap-8 items-center">
                     <div><img src="./src/assets/icons/Search.svg" alt="Search Icon" /></div>
