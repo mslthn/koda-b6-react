@@ -4,9 +4,8 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/icons/coffee.svg";
 import leftImage from "../assets/images/Rectangle-289.png";
-
-// const el = document.getElementById("root")
-// const root = createRoot(el)
+import fbLogo from "../assets/icons/facebook.svg"
+import googleLogo from "../assets/icons/google.svg"
 
 const RegisterPage = () => {
   return (
@@ -21,7 +20,7 @@ const RegisterPage = () => {
             <div className="font-sacramento">Coffee Shop</div>
           </div>
           <div>
-            <h1>Register</h1>
+            <h1 className="text-xl text-[#8E6447]">Register</h1>
             <p>Fill out the form correctly</p>
           </div>
           <div className="flex flex-col gap-5">
@@ -77,13 +76,15 @@ const RegisterPage = () => {
             </form>
           </div>
           <div className="flex flex-col items-center gap-5">
-            <div>Have An Account? <span className="text-orange-400"><Link to="">Login</Link></span></div>
+            <div>Have An Account? <span className="text-orange-400"><Link to="/login">Login</Link></span></div>
             <div>Or</div>
             <div className="flex flex-row gap-10 w-full">
-              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 text-center">
+              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
+                <img src={fbLogo} alt="Facebook Logo" />
                 Facebook
               </div>
-              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 text-center">
+              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
+                <img src={googleLogo} alt="Google Logo" />
                 Google
               </div>
             </div>
@@ -93,5 +94,5 @@ const RegisterPage = () => {
     </div>
   );
 };
-// root.render(<RegisterPage/>)
+
 export default RegisterPage;
