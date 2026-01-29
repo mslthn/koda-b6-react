@@ -3,6 +3,7 @@ import smImage1 from "../assets/images/hazelnut-latte.png"
 import smImage2 from "../assets/images/Authentic-Coffee.jpg"
 import smImage3 from "../assets/images/latte-art-detail.jpg"
 import cartIcon from "../assets/icons/ShoppingCartOren.svg"
+import MenuFrame from "../components/MenuFrame"
 
 const DetailProductsPage = () => {
     return (
@@ -54,6 +55,42 @@ const DetailProductsPage = () => {
                             <img src={cartIcon} alt="Add to cart" />
                             Add to cart</button>
                     </div>
+                </div>
+            </div>
+            <div className="flex flex-col gap-5 p-20 pt-0 items-center">
+                <div className="text-5xl">Recommendation for you</div>
+                <div className="flex flex-row gap-5">
+                    <MenuFrame
+                                image='src/assets/images/chocolatte-frappe.jpg'
+                                title='Chocolatte Frappe'
+                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
+                                showRating={true}
+                                oldPrice='IDR 20.000'
+                                price='IDR 10.000'
+                                showFlashSale={true}/>
+                    <MenuFrame
+                                image='src/assets/images/chocolatte-frappe.jpg'
+                                title='Chocolatte Frappe'
+                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
+                                showRating={true}
+                                oldPrice='IDR 20.000'
+                                price='IDR 10.000'
+                                showFlashSale={true}/>
+                    <MenuFrame
+                                image='src/assets/images/chocolatte-frappe.jpg'
+                                title='Chocolatte Frappe'
+                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
+                                showRating={true}
+                                oldPrice='IDR 20.000'
+                                price='IDR 10.000'
+                                showFlashSale={true}/>
+                </div>
+                <div className="flex gap-5 justify-center w-full col-span-2 mt-5">
+                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">1</button>
+                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">2</button>
+                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">3</button>
+                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">4</button>
+                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">&rarr;</button>
                 </div>
             </div>
         </div>
