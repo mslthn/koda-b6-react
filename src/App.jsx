@@ -7,12 +7,13 @@ import HomePage from "./pages/HomePage"
 import RegisterPage from './pages/Register'
 import LoginPage from './pages/Login'
 import ForgotPasswordPage from './pages/ForgotPassword'
-import Products from './pages/Products'
+import ProductsPage from './pages/ProductsPage'
+import DetailProductsPage from './pages/DetailProductsPage'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage/>
+    element: <HomePage/>,
   },
   {
     path: "/register",
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/products",
-    element: <Products/>
+    element: <ProductsPage/>
+  },
+  {
+    path: "/detailProduct",
+    element: <DetailProductsPage/>
   }
 ])
 
