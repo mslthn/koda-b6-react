@@ -6,6 +6,7 @@ import ForgotPasswordPage from './pages/ForgotPassword'
 import ProductsPage from './pages/ProductsPage'
 import DetailProductsPage from './pages/DetailProductsPage'
 import CheckoutProductPage from './pages/CheckoutProductPage'
+import OrderHistory from './pages/OrderHistory'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/checkoutProduct",
     element: <CheckoutProductPage/>
+  },
+  {
+    path: "/orderHistory",
+    element: <OrderHistory/>
   }
 ])
 
