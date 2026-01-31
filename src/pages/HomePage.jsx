@@ -76,7 +76,7 @@ const HomePage = () => {
                       showRating={false}
                       oldPrice='IDR 20.000'
                       price='IDR 10.000'
-                      showFlashSale={true}/>
+                      showFlashSale={false}/>
                     <MenuFrame
                       image='src/assets/images/frappucino.jpg'
                       title='Frappucino'
@@ -84,7 +84,7 @@ const HomePage = () => {
                       showRating={false}
                       oldPrice='IDR 20.000'
                       price='IDR 10.000'
-                      showFlashSale={true}/>
+                      showFlashSale={false}/>
                       <MenuFrame
                       image='src/assets/images/strawberry-matcha.jpg'
                       title='Strawberry Matcha'
@@ -92,7 +92,7 @@ const HomePage = () => {
                       showRating={false}
                       oldPrice='IDR 20.000'
                       price='IDR 10.000'
-                      showFlashSale={true}/>
+                      showFlashSale={false}/>
                       <MenuFrame
                       image='src/assets/images/chocolatte-frappe.jpg'
                       title='Chocolatte Frappe'
@@ -100,7 +100,7 @@ const HomePage = () => {
                       showRating={false}
                       oldPrice='IDR 20.000'
                       price='IDR 10.000'
-                      showFlashSale={true}/>
+                      showFlashSale={false}/>
                     {/* <div>x</div>
                     <div>x</div>
                     <div>x</div>
