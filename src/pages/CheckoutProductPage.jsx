@@ -7,14 +7,12 @@ import gopay from "../assets/icons/Logo GoPay (SVG-240p) - FileVector69 1.svg";
 import ovo from "../assets/icons/Vector.svg";
 import paypal from "../assets/icons/logos_paypal.svg";
 import Input from "../components/Input";
-import NavigationBar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const CheckoutProductPage = () => {
   return (
     <>
-      <div className="m-20 flex flex-col gap-5">
-        <div className="text-3xl">Payment Details</div>
+      <div className="m-20 mt-30 flex flex-col gap-10">
+        <div className="text-5xl font-medium">Payment Details</div>
         <div className="flex flew-row gap-5">
           <div className="w-2/3 flex flex-col gap-10">
             <div>

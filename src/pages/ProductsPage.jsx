@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import NavigationBar from "../components/Navbar";
-import Footer from "../components/Footer";
 import bgProduct from "../assets/images/bgProduct.svg"
 import happyMothers from "../assets/images/happy-mothers-day.png"
 import yellowVoucher from "../assets/images/get-a-cup-of-coffee.png"
@@ -12,19 +10,16 @@ import Button from "../components/Button";
 const ProductsPage = () =>{
     return (
         <div>
-            <NavigationBar/>
             <main>
                 <section>
-                    {/* className="bg-[url(src/assets/images/bgProduct.svg)] flex items-center" */}
-                    <div className="">
+                    <div className="absolute">
                         <img src={bgProduct} alt="Coffee Milk Images" />
                     </div>
-                    <div className=" text-white text-5xl">We Provide Good Coffee and Healthy Meals</div>
-                    {/* <div className="h-76 w-full">
-                        <div className="text-white text-5xl">We Provide Good Coffee and Healthy Meals</div>
-                    </div> */}
+                    <div className="relative flex flex-row top-30 pl-20 items-center text-white text-5xl">
+                        <p>We Provide Good Coffee and Healthy Meals</p>
+                    </div>
                 </section>
-                <section>
+                <section className="mt-70">
                     <div className="flex px-20 justify-between">
                         <div className="text-3xl">Today Promo</div>
                         <div className="flex gap-5">
@@ -241,7 +236,6 @@ const ProductsPage = () =>{
                     </div>
                 </section>
             </main>
-            <Footer/>
         </div>
     )
 }

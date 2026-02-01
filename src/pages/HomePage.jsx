@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import NavigationBar from "../components/Navbar";
-import Footer from "../components/Footer";
 import heroImage from "../assets/images/home.jpg";
 import baristaImage from "../assets/images/barista-Rectangle.jpg";
 import MenuFrame from "../components/MenuFrame";
@@ -10,7 +8,6 @@ import ikoUwais from "../assets/images/iko-uwais.jpeg"
 const HomePage = () => {
   return (
     <>
-      <NavigationBar />
       <main>
         <section className="flex flex-row">
           <div className="w-1/2 flex items-center justify-center bg-[linear-gradient(168.18deg,_#777C82_-114.74%,_#0B0909_91.35%)]">
@@ -133,9 +130,6 @@ const HomePage = () => {
           </div>
         </section>
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </>
   );
 };
