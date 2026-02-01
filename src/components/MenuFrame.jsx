@@ -1,7 +1,14 @@
 import React from "react";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 function MenuFrame(props) {
+  const navigate = useNavigate()
+
+  const handleButtonClick = () => {
+    navigate('/checkoutProduct')
+  }
+
   const {
     image,
     title,
@@ -61,7 +68,7 @@ function MenuFrame(props) {
         </div>
         <footer className="flex items-center gap-2">
           <div className="flex w-2/3">
-            <Button text="Buy" ></Button>
+            <Button text="Buy" onClick={handleButtonClick}></Button>
           </div>
           <a href="#" className="flex w-1/3 flex items-center justify-center border border-[#ff8906] rounded-md p-1">
             <img src="src/assets/icons/ShoppingCartOren.svg" alt="icon-cart-shopping" className="w-6 h-6" />
