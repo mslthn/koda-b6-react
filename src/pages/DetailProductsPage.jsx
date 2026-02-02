@@ -4,11 +4,75 @@ import smImage2 from "../assets/images/Authentic-Coffee.jpg"
 import smImage3 from "../assets/images/latte-art-detail.jpg"
 import cartIcon from "../assets/icons/ShoppingCartOren.svg"
 import MenuFrame from "../components/MenuFrame"
+import { useState, useEffect } from "react"
 
 const DetailProductsPage = () => {
+    const [menuData, setMenuData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [filteredData, setFilteredData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = 3;
+
+    useEffect(() => {
+        const fetchMenuData = async () => {
+          try {
+            setLoading(true);
+            const response = await fetch(
+              "https://raw.githubusercontent.com/mslthn/koda-b6-react/refs/heads/main/src/assets/data/products.json",
+            );
+            const data = await response.json();
+            setMenuData(data);
+            setFilteredData(data);
+          } catch (error) {
+            console.error("Error fetching menu data:", error);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchMenuData();
+      }, []);
+    
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const currentItems = filteredData.slice(startIndex, endIndex);
+    
+      const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ behavior: "smooth" });
+        // window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    
+      const getPageNumbers = () => {
+        const pages = [];
+        const maxPagesToShow = 4;
+    
+        if (totalPages <= maxPagesToShow) {
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+        } else {
+          if (currentPage <= 2) {
+            pages.push(1, 2, 3, 4);
+          } else if (currentPage >= totalPages - 1) {
+            pages.push(totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+          } else {
+            pages.push(
+              currentPage - 1,
+              currentPage,
+              currentPage + 1,
+              currentPage + 2,
+            );
+          }
+        }
+        return pages;
+      };
+    
     return (
         <div>
-            <div className="flex flex-row gap-5 mx-20 my-20">
+            <div className="flex flex-row gap-5 mx-20 mb-20 mt-40">
                 <div className="w-1/2 flex flex-col gap-3 justify-center">
                     <div className="flex justify-center">
                         <img className="size-150 object-cover" src={bigImage} alt="latte art image" />
@@ -60,38 +124,86 @@ const DetailProductsPage = () => {
             <div className="flex flex-col gap-5 p-20 pt-0 items-center">
                 <div className="text-5xl">Recommendation for you</div>
                 <div className="flex flex-row gap-5">
-                    <MenuFrame
+                    {/* Products */}
+                    <div>
+                        {loading ? (
+                          <div className="flex justify-center items-center h-64">
+                            <p className="text-xl">Loading products...</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="grid grid-cols-3 gap-5">
+                              {currentItems.map((item, index) => (
+                                <MenuFrame
+                                  key={item.id || index}
+                                  image={item.image}
+                                  title={item.title || item.name}
+                                  description={item.description}
+                                  showRating={true}
+                                  rating={item.rating}
+                                  oldPrice={item.oldPrice}
+                                  price={item.price}
+                                  showFlashSale={item.flashSale || false}
+                                />
+                              ))}
+                            </div>
+                          
+                            {/* Pagination */}
+                            {totalPages > 1 && (
+                              <div className="flex gap-5 justify-center w-full mt-8">
+                                {getPageNumbers().map((pageNum) => (
+                                  <button
+                                    key={pageNum}
+                                    onClick={() => handlePageChange(pageNum)}
+                                    className={`size-13 flex items-center justify-center rounded-full text-2xl ${
+                                      currentPage === pageNum
+                                        ? "bg-[#FF8906] text-white"
+                                        : "bg-gray-200 text-gray-500"
+                                    }`}
+                                  >
+                                    {pageNum}
+                                  </button>
+                                ))}
+
+                                {currentPage < totalPages && (
+                                  <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200"
+                                  >
+                                    &rarr;
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </>
+                        )}
+                    </div>
+                    {/* <MenuFrame
                                 image='src/assets/images/chocolatte-frappe.jpg'
                                 title='Chocolatte Frappe'
                                 description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                                 showRating={true}
-                                oldPrice='IDR 20.000'
-                                price='IDR 10.000'
+                                oldPrice='20.000'
+                                price='10.000'
                                 showFlashSale={true}/>
                     <MenuFrame
                                 image='src/assets/images/chocolatte-frappe.jpg'
                                 title='Chocolatte Frappe'
                                 description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                                 showRating={true}
-                                oldPrice='IDR 20.000'
-                                price='IDR 10.000'
+                                oldPrice='20.000'
+                                price='10.000'
                                 showFlashSale={true}/>
                     <MenuFrame
                                 image='src/assets/images/chocolatte-frappe.jpg'
                                 title='Chocolatte Frappe'
                                 description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                                 showRating={true}
-                                oldPrice='IDR 20.000'
-                                price='IDR 10.000'
-                                showFlashSale={true}/>
+                                oldPrice='20.000'
+                                price='10.000'
+                                showFlashSale={true}/> */}
                 </div>
-                <div className="flex gap-5 justify-center w-full col-span-2 mt-5">
-                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">1</button>
-                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">2</button>
-                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">3</button>
-                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">4</button>
-                    <button className="size-13 flex items-center justify-center rounded-full text-2xl text-gray-500 bg-gray-200">&rarr;</button>
-                </div>
+
             </div>
         </div>
     )
