@@ -59,11 +59,11 @@ function MenuFrame(props) {
         <div className="flex items-center">
           {oldPrice && (
             <span className="text-[#d00000] text-xs font-medium line-through mr-2">
-              {oldPrice}
+              IDR {oldPrice.toLocaleString("id-ID")}
             </span>
           )}
           <span className="text-[#ff8906] text-xl font-medium ">
-            {price}
+            IDR {price.toLocaleString("id-ID")}
           </span>
         </div>
         <footer className="flex items-center gap-2">
