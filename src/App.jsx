@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createContext, useState, useEffect } from 'react';
 import Layout from './layout/MainLayout';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/Register';
@@ -9,14 +10,21 @@ import DetailProductsPage from './pages/DetailProductsPage';
 import CheckoutProductPage from './pages/CheckoutProductPage';
 import OrderHistory from './pages/OrderHistory';
 import OrderDetail from './pages/OrderDetailPage';
+import fetchMenuData from './lib/fetchMenu';
+import AdminDashboard from './pages/AdminDashboard';
+export const ProductContext = createContext();
 
 const router = createBrowserRouter([
+  {
+    path: '/AdminDashboard',
+    element: <AdminDashboard/>
+  },
   {
     path: '/',
     element: <Layout />,
     children: [
       {
-        index: true,
+        path:'/',
         element: <HomePage />,
       },
       {
@@ -56,7 +64,30 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchMenuData();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  return (
+    <ProductContext.Provider value={{ products, loading, error }}>
+      <RouterProvider router={router} />
+    </ProductContext.Provider>
+  );
 }
 
 export default App;
