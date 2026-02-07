@@ -4,8 +4,15 @@ import baristaImage from "../assets/images/barista-Rectangle.jpg";
 import MenuFrame from "../components/MenuFrame";
 import mapImage from "../assets/images/Huge Global.svg"
 import ikoUwais from "../assets/images/iko-uwais.jpeg"
+import { useContext } from "react";
+import {ProductContext} from "../App"
 
 const HomePage = () => {
+  const {products, loading, error} = useContext(ProductContext)
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  
   return (
     <>
       <main>
@@ -71,32 +78,32 @@ const HomePage = () => {
                       title='Hazelnut Latte'
                       description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                       showRating={false}
-                      oldPrice='IDR 20.000'
-                      price='IDR 10.000'
+                      oldPrice='20.000'
+                      price='10.000'
                       showFlashSale={false}/>
                     <MenuFrame
                       image='src/assets/images/frappucino.jpg'
                       title='Frappucino'
                       description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                       showRating={false}
-                      oldPrice='IDR 20.000'
-                      price='IDR 10.000'
+                      oldPrice='20.000'
+                      price='10.000'
                       showFlashSale={false}/>
                       <MenuFrame
                       image='src/assets/images/strawberry-matcha.jpg'
                       title='Strawberry Matcha'
                       description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                       showRating={false}
-                      oldPrice='IDR 20.000'
-                      price='IDR 10.000'
+                      oldPrice='20.000'
+                      price='10.000'
                       showFlashSale={false}/>
                       <MenuFrame
                       image='src/assets/images/chocolatte-frappe.jpg'
                       title='Chocolatte Frappe'
                       description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
                       showRating={false}
-                      oldPrice='IDR 20.000'
-                      price='IDR 10.000'
+                      oldPrice='20.000'
+                      price='10.000'
                       showFlashSale={false}/>
                     {/* <div>x</div>
                     <div>x</div>
