@@ -13,11 +13,18 @@ import OrderDetail from './pages/OrderDetailPage';
 import fetchMenuData from './lib/fetchMenu';
 import AdminDashboard from './pages/AdminDashboard';
 export const ProductContext = createContext();
+import AdminLayout from './layout/AdminLayout';
 
 const router = createBrowserRouter([
   {
-    path: '/AdminDashboard',
-    element: <AdminDashboard/>
+    path: '/dashboard',
+    element: <AdminLayout/>,
+    children: [
+      {
+        path: '/dashboard',
+        element: <AdminDashboard/>,
+      },
+    ],
   },
   {
     path: '/',
