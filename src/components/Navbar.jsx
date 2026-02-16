@@ -33,10 +33,16 @@ const NavigationBar = () => {
                     <div><img src="./src/assets/icons/ShoppingCart.svg" alt="Shoping cart" /></div>
                     { user ? 
                         <>
-                            <button className="text-black border border-white h-12 w-20 flex items-center justify-center rounded-lg">
-                                {user.fullname}
+                            <button className="cursor-pointer text-black font-semibold border border-white bg-orange-300 size-10 rounded-full flex items-center justify-center"
+                                // next klik tampilin pilihan Profile, logout
+                                // onClick={}
+                            >
+                                {(user.fullname).charAt(0)}
                             </button>
-                            <button onClick={()=>{logOut()}}>Log out</button>
+                            <button
+                                className="cursor-pointer border border-[#FF8906] bg-amber-500 hover:bg-amber-600 rounded-lg px-5 py-2" 
+                                onClick={()=>{logOut()}}
+                                >Log out</button>
                         </>
                         :
                         <>
