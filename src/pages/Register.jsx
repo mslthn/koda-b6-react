@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "yup-password";
 import * as yup from 'yup';
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -13,7 +12,7 @@ import googleLogo from "../assets/icons/google.svg";
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const validationSchema = yup.object().shape({
+  const validationSchema = yup.object({
     fullname: yup.string()
       .min(3, "Full name must be at least 3 characters")
       .required("Full name is required"),
@@ -21,12 +20,6 @@ const RegisterPage = () => {
       .email("Invalid email format")
       .required("Email is required"),
     password: yup.string()
-      // .password()
-      // .min(8, "Password must be at least 8 characters")
-      // .minLowercase(1, "Password must contain at least 1 lowercase letter")
-      // .minUppercase(1, "Password must contain at least 1 uppercase letter")
-      // .minNumbers(1, "Password must contain at least 1 number")
-      // .minSymbols(1, "Password must contain at least 1 special character")
       .min(8, "Password must be at least 8 characters")
       .matches(/[a-z]/, "Password must contain at least 1 lowercase letter")
       .matches(/[A-Z]/, "Password must contain at least 1 uppercase letter")
@@ -44,7 +37,7 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
-  });
+  }); 
 
   const onSubmit = (data) => {
     // console.log("Form:", data);
@@ -55,7 +48,7 @@ const RegisterPage = () => {
     };
 
     localStorage.setItem("registeredUser", JSON.stringify(userData));
-    alert("Registration successful! Please login.");    
+    alert("Registration successful! Please login.");
 
     navigate("/login");
   };
@@ -64,7 +57,7 @@ const RegisterPage = () => {
     <div className="flex flex-row gap-10">
       {/* <div className="flex justify-center items-center w-full h-full absolute">
         <div className='w-md h-36 z-5 absolute bg-[#6FC276] flex justify-center items-center rounded-xl text-xl'>
-          Login success! Redirecting to Login page...
+          Registration successful! Redirecting to Login page...
         </div>
       </div> */}
       <div className="w-1/3">
@@ -107,7 +100,7 @@ const RegisterPage = () => {
                   type="email"
                   id="email"
                   placeholder="Enter Your Email"
-                  src="./src/assets/icons/Mail.svg"
+                  src="./src/assets/icons/mail.svg"
                   alt="Mail Icon"
                   {...register("email")}
                 />

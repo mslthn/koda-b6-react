@@ -5,7 +5,7 @@ import MenuFrame from "../components/MenuFrame";
 import mapImage from "../assets/images/Huge Global.svg"
 import ikoUwais from "../assets/images/iko-uwais.jpeg"
 import { useContext } from "react";
-import {ProductContext} from "../App"
+import ProductContext from '../components/context/ProductContext';
 
 const HomePage = () => {
   const {products, loading, error} = useContext(ProductContext)
@@ -27,7 +27,7 @@ const HomePage = () => {
                 made by love just for you. Start your day with us for a bigger
                 smile!
               </p>
-              <div className="bg-[#FF8906] rounded-md w-1/3 h-12 flex items-center justify-center"><Link to="">Get Started</Link></div>
+              <div className="bg-[#FF8906] rounded-md w-1/3 h-12 flex items-center justify-center"><Link to="/products">Get Started</Link></div>
               <div className="grid grid-cols-3 divide-x-1 divide-solid divide-[#FFFFFF]">
                 <div>
                   <div className="text-5xl text-[#FF8906]">90+</div>

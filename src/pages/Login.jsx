@@ -123,11 +123,11 @@ const LoginPage = () => {
             </div>
             <div>Or</div>
             <div className="flex flex-row gap-10 w-full">
-              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
+              <div className="border-solid border border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
                 <img src={fbLogo} alt="Facebook Logo" />
                 Facebook
               </div>
-              <div className="border-solid border-1 border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
+              <div className="border-solid border border-gray-300 p-2 rounded-lg w-1/2 flex justify-center items-center">
                 <img src={googleLogo} alt="Google Logo" />
                 Google
               </div>
