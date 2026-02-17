@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from './layout/MainLayout';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/Register';
@@ -12,8 +12,9 @@ import OrderHistory from './pages/OrderHistory';
 import OrderDetail from './pages/OrderDetailPage';
 import fetchMenuData from './lib/fetchMenu';
 import AdminDashboard from './pages/AdminDashboard';
-export const ProductContext = createContext();
 import AdminLayout from './layout/AdminLayout';
+import UserContext from './components/context/UserContext';
+import ProductContext from './components/context/ProductContext';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
-        path: 'detailProduct',
+        path: 'products/:productId',
         element: <DetailProductsPage />,
       },
       {
@@ -74,6 +75,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -88,12 +90,16 @@ function App() {
     };
 
     loadProducts();
+
+    setUser(JSON.parse(localStorage.getItem("loggedInUser")) || null)
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, loading, error }}>
-      <RouterProvider router={router} />
-    </ProductContext.Provider>
+    <UserContext value={user}>
+      <ProductContext.Provider value={{ products, loading, error }}>
+        <RouterProvider router={router} />
+      </ProductContext.Provider>
+    </UserContext>
   );
 }
 
