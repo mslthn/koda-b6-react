@@ -5,6 +5,7 @@ import yellowVoucher from "../assets/images/get-a-cup-of-coffee.png";
 import MenuFrame from "../components/MenuFrame";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const ProductsPage = () => {
   const [menuData, setMenuData] = useState([]);
@@ -12,7 +13,7 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
 
-  const itemsPerPage = 8; // 2 columns x 4 rows
+  const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchMenuData = async () => {
@@ -33,6 +34,12 @@ const ProductsPage = () => {
 
     fetchMenuData();
   }, []);
+
+  const navigate = useNavigate()
+
+  const toDetailProduct = (productId) => {
+    navigate (`/products/${productId}`)
+  }
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -75,14 +82,14 @@ const ProductsPage = () => {
       <main>
         <section>
           <div className="absolute">
-            <img src={bgProduct} alt="Coffee Milk Images" />
+            <img src={bgProduct} alt="Coffee Milk Images" className="w-screen"/>
           </div>
-          <div className="relative flex flex-row top-30 pl-20 items-center text-white text-5xl">
+          <div className="relative flex flex-row top-30 pl-20 w-full items-center text-white text-5xl">
             <p>We Provide Good Coffee and Healthy Meals</p>
           </div>
         </section>
 
-        <section className="mt-70">
+        <section className="mt-90">
           <div className="flex px-20 justify-between">
             <div className="text-3xl">Today Promo</div>
             <div className="flex gap-5">
@@ -153,7 +160,7 @@ const ProductsPage = () => {
         </section>
 
         <section>
-          <div className="flex gap-5 mx-20 my-10">
+          <div className="flex justify-evenly gap-10 mx-20 my-10">
             {/* Filter Section BELUM JALAN*/}
             <form className="w-1/3 h-fit bg-[#0B0909] rounded-xl p-5 flex flex-col gap-5">
               <div className="flex justify-between text-white font-bold">
@@ -169,7 +176,8 @@ const ProductsPage = () => {
                 <div className="text-white">Category</div>
                 <div className="flex flex-col gap-5 text-white">
                   <div className="flex gap-3">
-                    <input type="checkbox" name="" id="favoriteProduct" />
+                    <input type="checkbox" name="" id="favoriteProduct"
+                    checked={()=>{}}/>
                     <label htmlFor="favoriteProduct">Favorite Product</label>
                   </div>
                   <div className="flex gap-3">
@@ -215,7 +223,10 @@ const ProductsPage = () => {
                 <h2 className="text-white">Range Price</h2>
                 <input type="range" />
               </div>
-              <Button type="submit" text="Apply Filter" />
+              <Button type="submit" text="Apply Filter" 
+                onClick={()=>{
+
+              }}/>
             </form>
 
             {/* Products Grid */}
@@ -226,20 +237,29 @@ const ProductsPage = () => {
                 </div>
               ) : (
                 <>
+                  {/* <div className="flex flex-wrap flex-row gap-20"> */}
                   <div className="grid grid-cols-2 gap-5">
-                    {currentItems.map((item, index) => (
-                      <MenuFrame
-                        key={item.id || index}
-                        image={item.image}
-                        title={item.title || item.name}
-                        description={item.description}
-                        showRating={true}
-                        rating={item.rating}
-                        oldPrice={item.oldPrice}
-                        price={item.price}
-                        showFlashSale={item.flashSale || false}
-                      />
-                    ))}
+                    
+                      {currentItems.map((item, index) => (
+                        <div
+                          key={item.id || index}
+                          onClick={() => toDetailProduct(item.id)}
+                          className="cursor-pointer"
+                        >
+                          <MenuFrame
+                            image={item.images[0]}
+                            title={item.title || item.name}
+                            description={item.description}
+                            showRating={true}
+                            rating={item.rating}
+                            oldPrice={item.oldPrice}
+                            price={item.price}
+                            showFlashSale={item.flashSale || false}
+                          />
+                        </div>
+                      ))}
+
+                    
                   </div>
 
                   {/* Pagination */}
