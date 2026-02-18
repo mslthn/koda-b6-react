@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      contents: read
     steps:
       - name: Setup nodejs v24.13.0
         uses: actions/setup-node@v6
