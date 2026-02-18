@@ -56,4 +56,4 @@ jobs:
           script: |
             docker pull ghcr.io/mslthn/coffee-shop-anton:latest
             docker rm -f web-anton
-            docker run -d -p 20501:80 --name web-anton ghcr.io/mslthn/coffee-shop-anton:latest
+            docker run -d -p 20501:80 --name web-anton --network pman_web ghcr.io/mslthn/coffee-shop-anton:latest
