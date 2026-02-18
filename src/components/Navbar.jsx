@@ -13,11 +13,11 @@ const NavigationBar = () => {
 
     return (
         <div className="fixed w-full z-5">
-            <nav className="flex flex-row justify-around bg-[#0B090921] p-5 items-center">
+            <nav className=" flex flex-row justify-around bg-[#0B090921] p-5 items-center">
                 <div className="flex flex-row gap-15 items-center">
                     <div>
                         <Link to="/" className="flex flex-row">
-                            <img src="./src/assets/icons/logo-putih.svg" alt="Logo" />
+                            <img src="../src/assets/icons/logo-putih.svg" alt="Logo" />
                             <p className="font-[sacramento] text-white">Coffee Shop</p>
                         </Link>
                     </div>
@@ -29,8 +29,8 @@ const NavigationBar = () => {
                     </div>
                 </div>
                 <div className="flex flex-row gap-8 items-center">
-                    <div><img src="./src/assets/icons/Search.svg" alt="Search Icon" /></div>
-                    <div><img src="./src/assets/icons/ShoppingCart.svg" alt="Shoping cart" /></div>
+                    <div><img src="../src/assets/icons/Search.svg" alt="Search Icon" /></div>
+                    <div><img src="../src/assets/icons/ShoppingCart.svg" alt="Shoping cart" /></div>
                     { user ? 
                         <>
                             <button className="cursor-pointer text-black font-semibold border border-white bg-orange-300 size-10 rounded-full flex items-center justify-center"
