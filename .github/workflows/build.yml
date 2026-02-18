@@ -1,17 +1,11 @@
 name: coffee-shop
 run-name: Build and run latest image on server
-on:
-  push:
-    branch:
-      "main"
-    tags: 
-      [v*.*.*]
+on: [push]
 jobs:
   Build-and-Run:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      contents: read
     steps:
       - name: Setup nodejs v24.13.0
         uses: actions/setup-node@v6
