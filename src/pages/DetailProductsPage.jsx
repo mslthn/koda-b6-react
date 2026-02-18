@@ -1,150 +1,198 @@
-import bigImage from "../assets/images/cafe-latte.jpg"
-import smImage1 from "../assets/images/hazelnut-latte.png"
-import smImage2 from "../assets/images/Authentic-Coffee.jpg"
-import smImage3 from "../assets/images/latte-art-detail.jpg"
 import cartIcon from "../assets/icons/ShoppingCartOren.svg"
-import MenuFrame from "../components/MenuFrame"
-import { useState, useEffect } from "react"
+import MenuFrame from "../components/MenuFrame";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom"
+import ProductContext from "../components/context/ProductContext"
 
 const DetailProductsPage = () => {
-    const [menuData, setMenuData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [filteredData, setFilteredData] = useState([]);
+    const [product, setProduct] = useState(null)
+    const [quantity, setQuantity] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const [recommendations, setRecommendations] = useState([]);
+    const {productId} = useParams()
+    const { products, loading: productsLoading } = useContext(ProductContext)
+    const navigate = useNavigate();
 
     const itemsPerPage = 3;
 
     useEffect(() => {
-        const fetchMenuData = async () => {
-          try {
-            setLoading(true);
-            const response = await fetch(
-              "https://raw.githubusercontent.com/mslthn/koda-b6-react/refs/heads/main/src/assets/data/products.json",
-            );
-            const data = await response.json();
-            setMenuData(data);
-            setFilteredData(data);
-          } catch (error) {
-            console.error("Error fetching menu data:", error);
-          } finally {
-            setLoading(false);
-          }
-        };
+      if (products && products.length > 0) {
+        const foundProduct = products.find(p => p.id.toString() === productId);
+        setProduct(foundProduct);
+
+        const recommendedProducts = products.filter(p => p.id.toString() !== productId);
+        setRecommendations(recommendedProducts);
+        
+        setQuantity(1);
+        window.scrollTo(0, 0);
+      }
+    }, [products, productId]);
+
+    const handleIncrement = () => {
+      setQuantity(prev => prev + 1);
+    };
+
+    const handleDecrement = () => {
+        setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+    };
     
-        fetchMenuData();
-      }, []);
+    const totalPages = Math.ceil(recommendations.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = recommendations.slice(startIndex, endIndex);
     
-      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentItems = filteredData.slice(startIndex, endIndex);
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
     
-      const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-        window.scrollTo({ behavior: "smooth" });
-        // window.scrollTo({ top: 0, behavior: "smooth" });
-      };
-    
-      const getPageNumbers = () => {
-        const pages = [];
-        const maxPagesToShow = 4;
-    
-        if (totalPages <= maxPagesToShow) {
-          for (let i = 1; i <= totalPages; i++) {
-            pages.push(i);
-          }
-        } else {
-          if (currentPage <= 2) {
-            pages.push(1, 2, 3, 4);
-          } else if (currentPage >= totalPages - 1) {
-            pages.push(totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-          } else {
-            pages.push(
-              currentPage - 1,
-              currentPage,
-              currentPage + 1,
-              currentPage + 2,
-            );
-          }
-        }
-        return pages;
-      };
+    const getPageNumbers = () => {
+      const pages = [];
+      for (let i = 1; i <= totalPages; i++) {
+          pages.push(i);
+      }
+      return pages.slice(0, 4);
+    };
+
+    const toDetailProduct = (id) => {
+      navigate(`/products/${id}`);
+    };
+
+    if (productsLoading) {
+      return <div className="flex justify-center items-center h-screen text-2xl">Loading product...</div>;
+    }
+
+    if (!product) {
+        return <div className="flex justify-center items-center h-screen text-2xl">Product not found.</div>;
+    }
     
     return (
         <div>
-            <div className="flex flex-row gap-5 mx-20 mb-20 mt-40">
+            <div className="flex flex-col md:flex-row gap-10 mx-5 md:mx-20 mb-20 mt-40">
                 <div className="w-1/2 flex flex-col gap-3 justify-center">
                     <div className="flex justify-center">
-                        <img className="size-150 object-cover" src={bigImage} alt="latte art image" />
+                        <img
+                          src={product.images?.[0]}
+                          alt={product.title}
+                          className="w-full h-auto max-h-[500px] object-cover rounded-lg"
+                        />
                     </div>
                     <div className="flex flex-row gap-5 justify-center">
-                        <div><img className="object-cover size-45" src={smImage1} alt="latte art image" /></div>
-                        <div><img className="object-cover size-45" src={smImage2} alt="arabica coffee" /></div>
-                        <div><img className="object-cover size-45" src={smImage3} alt="Latte art image" /></div>
+                        {product.images?.slice(1, 4).map((img, index) => (
+                          <div key={index}>
+                            <img
+                              src={img}
+                              alt={`${product.title} view ${index + 1}`}
+                              className="object-cover size-32 md:size-45 rounded-lg"
+                            />
+                          </div>
+                        ))}
+
+                        {/* {product.images.slice(1, 4).map((img, index) => (
+                             <div key={index}><img className="object-cover size-32 md:size-45 rounded-lg" src={img} alt={`${product.title} view ${index + 1}`} /></div>
+                        ))} */}
                     </div>
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
-                    <div className="text-xl text-white bg-[#d00000] font-bold w-fit px-8 py-1 rounded-3xl">FLASH SALE</div>
-                    <div className="text-5xl font-medium">Hazelnut Latte</div>
-                    <div className="flex gap-3">
-                        <div className="text-[#d00000] text-xs font-medium font-[Plus_Jakarta_Sans] line-through">IDR 20.000</div>
-                        <div className="text-[#ff8906] text-2xl font-medium font-[Plus_Jakarta_Sans]">IDR 10.000</div>
+                    {product.flashSale && (
+                        <div className="text-xl text-white bg-[#d00000] font-bold w-fit px-8 py-1 rounded-3xl">FLASH SALE</div>
+                    )}
+                    <div className="text-5xl font-medium">{product.title}</div>
+                    <div className="flex gap-3 items-center">
+                      {product.oldPrice && (
+                        <div className="text-[#d00000] line-through">
+                          IDR {product.oldPrice.toLocaleString("id-ID")}
+                        </div>
+                      )}
+
+                      <div className="text-[#ff8906] text-2xl font-medium">
+                        IDR {product.price?.toLocaleString("id-ID")}
+                      </div>
                     </div>
-                    <div>rating</div>
-                    <div>200+ Reviews | Recommendation</div>
-                    <div>Cold brewing is a method of brewing that combines ground coffee and cool water and uses time instead of heat to extract the flavor. It is brewed in small batches and steeped for as long as 48 hours.</div>
+
+                    {/* <div className="flex gap-3 items-center">
+                        {product.oldPrice && (
+                            <div className="text-[#d00000] text-lg font-medium font-[Plus_Jakarta_Sans] line-through">
+                                IDR {product.oldPrice.toLocaleString('id-ID')}
+                            </div>
+                        )}
+                        <div className="text-[#ff8906] text-2xl font-medium font-[Plus_Jakarta_Sans]">
+                            IDR {product.price.toLocaleString('id-ID')}
+                        </div>
+                    </div> */}
+
+                    {product.rating && (
+                      <div>⭐ {product.rating} (200+ Reviews | Recommendation)</div>
+                    )}
+                    {/* <div>⭐ {product.rating} (200+ Reviews | Recommendation)</div> */}
+                    
+                    <div>
+                      {product.description || "No description available."}
+                    </div>
+                    {/* <div>{product.description}</div> */}
+                    
                     <div className="flex flex-row gap-5 items-center">
-                        <button className="size-10 border-2 border-[#FF8906] rounded-lg text-3xl flex items-center justify-center">-</button>
-                        <div className="text-2xl">1</div>
-                        <button className="size-10 bg-[#FF8906] rounded-lg text-3xl flex items-center justify-center">+</button>
+                        <button className="size-10 border-2 border-[#FF8906] rounded-lg text-3xl flex items-center justify-center"
+                          onClick={handleDecrement}
+                        >
+                          -</button>
+                        <div className="text-2xl">{quantity}</div>
+                        <button className="size-10 bg-[#FF8906] rounded-lg text-3xl flex items-center justify-center text-white"
+                          onClick={handleIncrement}
+                        >
+                          +
+                        </button>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <div className="text-2xl font-bold">Choose</div>
+                        <div className="text-2xl font-bold">Choose Size</div>
                         <div className="flex flex-row gap-5 w-full">
-                            <button className="w-1/3 border-1 border-[#FF8906]">Regular</button>
-                            <button className="w-1/3 border-1 border-[#FF8906]">Medium</button>
-                            <button className="w-1/3 border-1 border-[#FF8906]">Large</button>
+                            <button className="w-1/3 border border-[#FF8906] py-2 rounded-md hover:bg-orange-100">Regular</button>
+                            <button className="w-1/3 border border-[#FF8906] py-2 rounded-md hover:bg-orange-100">Medium</button>
+                            <button className="w-1/3 border border-[#FF8906] py-2 rounded-md hover:bg-orange-100">Large</button>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         <div className="text-2xl font-bold">Hot/Ice?</div>
                         <div className="flex flex-row gap-5 w-full">
-                            <button className="w-1/2 border-1 border-[#FF8906]">Ice</button>
-                            <button className="w-1/2 border-1 border-[#FF8906]">Hot</button>
+                            <button className="w-1/2 border border-[#FF8906] py-2 rounded-md hover:bg-orange-100">Ice</button>
+                            <button className="w-1/2 border border-[#FF8906] py-2 rounded-md hover:bg-orange-100">Hot</button>
                         </div>
                     </div>
-                    <div className="flex flex-row gap-3">
-                        <button className="w-1/2 bg-[#FF8906] p-3 rounded-lg">Buy</button>
-                        <button className="flex items-center justify-center p-3 rounded-lg w-1/2 border-1 border-[#FF8906]">
+                    <div className="flex flex-row gap-3 mt-4">
+                        <button className="w-1/2 bg-[#FF8906] p-3 rounded-lg text-white font-bold">Buy</button>
+                        <button className="flex items-center justify-center gap-2 p-3 rounded-lg w-1/2 border border-[#FF8906] font-bold">
                             <img src={cartIcon} alt="Add to cart" />
                             Add to cart</button>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-5 p-20 pt-0 items-center">
-                <div className="text-5xl">Recommendation for you</div>
-                <div className="flex flex-row gap-5">
-                    {/* Products */}
+            <div className="flex flex-col gap-5 p-5 md:p-20 pt-0 items-center">
+                <div className="text-5xl mb-5">Recommendation for you</div>
+                <div className="w-full">
                     <div>
-                        {loading ? (
+                        {productsLoading ? (
                           <div className="flex justify-center items-center h-64">
-                            <p className="text-xl">Loading products...</p>
+                            <p className="text-xl">Loading recommendations...</p>
                           </div>
                         ) : (
                           <>
-                            <div className="grid grid-cols-3 gap-5">
-                              {currentItems.map((item, index) => (
-                                <MenuFrame
-                                  key={item.id || index}
-                                  image={item.image}
-                                  title={item.title || item.name}
-                                  description={item.description}
-                                  showRating={true}
-                                  rating={item.rating}
-                                  oldPrice={item.oldPrice}
-                                  price={item.price}
-                                  showFlashSale={item.flashSale || false}
-                                />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                              {currentItems.map((item) => (
+                                <div
+                                    key={item.id}
+                                    onClick={() => toDetailProduct(item.id)}
+                                    className="cursor-pointer"
+                                >
+                                    <MenuFrame
+                                      image={item.images[0]}
+                                      title={item.title || item.name}
+                                      description={item.description}
+                                      showRating={true}
+                                      rating={item.rating}
+                                      oldPrice={item.oldPrice}
+                                      price={item.price}
+                                      showFlashSale={item.flashSale || false}
+                                    />
+                                </div>
                               ))}
                             </div>
                           
@@ -178,30 +226,6 @@ const DetailProductsPage = () => {
                           </>
                         )}
                     </div>
-                    {/* <MenuFrame
-                                image='src/assets/images/chocolatte-frappe.jpg'
-                                title='Chocolatte Frappe'
-                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
-                                showRating={true}
-                                oldPrice='20.000'
-                                price='10.000'
-                                showFlashSale={true}/>
-                    <MenuFrame
-                                image='src/assets/images/chocolatte-frappe.jpg'
-                                title='Chocolatte Frappe'
-                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
-                                showRating={true}
-                                oldPrice='20.000'
-                                price='10.000'
-                                showFlashSale={true}/>
-                    <MenuFrame
-                                image='src/assets/images/chocolatte-frappe.jpg'
-                                title='Chocolatte Frappe'
-                                description='You can explore the menu that we provide with fun and have their own taste and make your day better.'
-                                showRating={true}
-                                oldPrice='20.000'
-                                price='10.000'
-                                showFlashSale={true}/> */}
                 </div>
 
             </div>
