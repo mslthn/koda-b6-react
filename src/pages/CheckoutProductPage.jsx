@@ -37,20 +37,7 @@ const CheckoutProductPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleAddMenu = () => {
-    setCart((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        name: "Hazelnut Latte",
-        price: 10000,
-        originalPrice: 20000,
-        qty: 1,
-        size: "Regular",
-        ice: "Ice",
-        delivery: formData.deliveryMethod,
-        image: imageOrder,
-      },
-    ]);
+    navigate("/products")
   };
 
   const handleDelete = (id) => {
@@ -113,7 +100,7 @@ const CheckoutProductPage = () => {
                 <div className="text-xl">Your Order</div>
                 <button
                   onClick={handleAddMenu}
-                  className="bg-[#FF8906] rounded-lg px-10 py-2"
+                  className="bg-[#FF8906] rounded-lg px-10 py-2 cursor-pointer hover:bg-[#FE9909]"
                 >
                   + Add Menu
                 </button>
