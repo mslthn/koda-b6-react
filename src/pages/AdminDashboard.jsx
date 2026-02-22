@@ -1,8 +1,4 @@
 import {FaHourglassEnd, FaPersonBooth, FaTruck} from 'react-icons/fa'
-// import Chart from 'chart.js/auto'
-import { Chart } from 'react-charts'
- 
-//  type MyDatum = {date: Date, stars: number }
 
 const AdminDashboard = ()=>{
 
