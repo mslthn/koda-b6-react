@@ -1,5 +1,4 @@
 import {FaHourglassEnd, FaPersonBooth, FaTruck} from 'react-icons/fa'
-// import Chart from 'chart.js/auto'
 
 const AdminDashboard = ()=>{
 
