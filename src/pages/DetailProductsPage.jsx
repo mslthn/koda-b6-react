@@ -73,14 +73,14 @@ const DetailProductsPage = () => {
                         <img
                           src={product.images?.[0]}
                           alt={product.title}
-                          className="w-full h-auto max-h-[500px] object-cover rounded-lg"
+                          className="w-full h-auto max-h-150 max-w-xl object-cover rounded-lg"
                         />
                     </div>
                     <div className="flex flex-row gap-5 justify-center">
                         {product.images?.slice(1, 4).map((img, index) => (
                           <div key={index}>
                             <img
-                              src={img}
+                              src={product.images[index]}
                               alt={`${product.title} view ${index + 1}`}
                               className="object-cover size-32 md:size-45 rounded-lg"
                             />
@@ -121,9 +121,9 @@ const DetailProductsPage = () => {
                     </div> */}
 
                     {product.rating && (
-                      <div>⭐ {product.rating} (200+ Reviews | Recommendation)</div>
+                      <div> (200+ Reviews | Recommendation)</div>
                     )}
-                    {/* <div>⭐ {product.rating} (200+ Reviews | Recommendation)</div> */}
+                    {/* <div>(200+ Reviews | Recommendation)</div> */}
                     
                     <div>
                       {product.description || "No description available."}
