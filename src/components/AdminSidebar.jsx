@@ -9,9 +9,9 @@ const AdminSidebar = () => {
   const menuItems = [
     { icon: <TbApps />, label: 'Dashboard', active: true },
     { icon: <LuGlassWater/>, label: 'Product', active: false },
-    { icon: <IoBagCheckOutline/>, label: 'Promo', active: false },
+    { icon: <IoBagCheckOutline/>, label: 'Order', active: false },
     { icon: <FiUsers/>, label: 'User', active: false },
-    { icon: <FiLogOut />, label: 'Product', active: false }
+    { icon: <FiLogOut />, label: 'Keluar', active: false }
   ];
 
   return (
@@ -37,4 +37,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
+export default AdminSidebar
