@@ -172,7 +172,7 @@ function AdminDashboard() {
       <AdminSidebar active={activeMenu} setActive={setActiveMenu} />
 
       {/* Main Content */}
-      <main className="ml-60 pt-25 p-6">
+      <main className="ml-65 pt-25 p-10">
         {/* Stat Cards */}
         <div className="grid grid-cols-3 gap-4 mb-5">
           <StatCard
