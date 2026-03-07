@@ -2,15 +2,16 @@ import { Link } from "react-router-dom"
 import { MdExpandMore } from "react-icons/md";
 import { PiShoppingCartLight } from "react-icons/pi";
 import { FiSearch } from "react-icons/fi";
+import logo from "../assets/icons/coffee.svg"
 
 const AdminNavbar = () => {
     return (
         <div className="fixed w-full z-5">
-            <nav className="flex flex-row justify-between bg-[#FFFFFF] border-1 border-[#E8E8E8] p-5 px-10 items-center">
+            <nav className="flex flex-row justify-between bg-[#FFFFFF] border border-[#E8E8E8] p-5 px-10 items-center">
                 <div className="flex flex-row gap-15 items-center">
                     <div>
                         <Link to="/" className="flex flex-row">
-                            <img src="./src/assets/icons/coffee.svg" alt="Logo" />
+                            <img src={logo} alt="Logo" />
                             <p className="font-[sacramento] text-[#8E6447]">Coffee Shop</p>
                         </Link>
                     </div>
