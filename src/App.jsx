@@ -15,6 +15,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminLayout from './layout/AdminLayout';
 import UserContext from './components/context/UserContext';
 import ProductContext from './components/context/ProductContext';
+import AdminProduct from './pages/AdminProduct';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <AdminDashboard/>,
+      },
+      {
+        path: '/dashboard/products',
+        element: <AdminProduct/>
       },
     ],
   },
