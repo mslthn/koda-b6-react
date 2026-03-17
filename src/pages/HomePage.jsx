@@ -19,7 +19,7 @@ const HomePage = () => {
         <section className="flex flex-row">
           <div className="w-1/2 flex items-center justify-center bg-[linear-gradient(168.18deg,_#777C82_-114.74%,_#0B0909_91.35%)]">
             <div className="w-md flex flex-col gap-10">
-              <h1 className="text-5xl text-[#FFFFFF]">
+              <h1 className="text-6xl text-[#FFFFFF]">
                 Start Your Day with Coffee and Good Meals
               </h1>
               <p className="text-[#FFFFFF]">
