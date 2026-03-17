@@ -2,7 +2,7 @@ FROM node:24.13.1-alpine AS build
 
 WORKDIR /workspace
 
-COPY package.json .
+COPY package*.json .
 
 RUN npm install
 
