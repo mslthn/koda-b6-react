@@ -1,6 +1,7 @@
 import { use, useContext } from "react"
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import UserContext from "./context/UserContext"
+import {logo} from "../src/assets/icons/logo-putih.svg"
 
 const NavigationBar = () => {
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ const NavigationBar = () => {
                 <div className="flex flex-row gap-15 items-center">
                     <div>
                         <Link to="/" className="flex flex-row">
-                            <img src="../src/assets/icons/logo-putih.svg" alt="Logo" />
+                            <img src={logo} alt="Logo" />
                             <p className="font-[sacramento] text-white">Coffee Shop</p>
                         </Link>
                     </div>
