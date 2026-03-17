@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build
 
 
-FROM nginx:1.28.2-alpine
+FROM nginx:stable-alpine3.23
 
 WORKDIR /usr/share/nginx/html
 
