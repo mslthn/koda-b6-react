@@ -2,12 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import api from "../lib/axios";
+
 import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/icons/coffee.svg";
 import leftImage from "../assets/images/Rectangle-289.png";
 import fbLogo from "../assets/icons/facebook.svg";
 import googleLogo from "../assets/icons/google.svg";
+import mailIcon from "../assets/icons/mail.svg"
+import passwdIcon from "../assets/icons/Password.svg"
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -29,28 +34,30 @@ const LoginPage = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Login attempt:", data);
+  const { mutate, isPending } = useMutation({
+    mutationFn: (credentials) => {
+      return api.post("/login", credentials)
+    },
+    onSuccess: (response) => {
+      const { token } = response.data
 
-    const registeredUser = localStorage.getItem("registeredUser");
+      if (token) {
+        localStorage.setItem("token", token)
+        localStorage.setItem("isAuthenticated", "true")
 
-    if (registeredUser) {
-      const userData = JSON.parse(registeredUser);
-
-      if (userData.email === data.email) {
-        localStorage.setItem("loggedInUser", JSON.stringify(userData));
-        localStorage.setItem("isAuthenticated", "true");
-
-        alert("Login successful!");
-
-        navigate("/");
-      } else {
-        alert("Invalid email or password");
+        alert("Login successful!")
+        navigate("/")
       }
-    } else {
-      alert("No account found. Please register first.");
-    }
-  };
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.message || "Invalid email or password"
+      alert(errorMessage)
+    },
+  })
+
+  const onSubmit = (data) => {
+    mutate(data)
+  }
 
   return (
     <div className="flex flex-row gap-10">
@@ -76,7 +83,7 @@ const LoginPage = () => {
                   type="email"
                   id="email"
                   placeholder="Enter Your Email"
-                  src="./src/assets/icons/Mail.svg"
+                  src={mailIcon}
                   alt="Mail Icon"
                   {...register("email")}
                 />
@@ -94,7 +101,7 @@ const LoginPage = () => {
                   type="password"
                   id="password"
                   placeholder="Enter Your Password"
-                  src="./src/assets/icons/Password.svg"
+                  src={passwdIcon}
                   alt="Lock Icon"
                   {...register("password")}
                 />
@@ -111,7 +118,10 @@ const LoginPage = () => {
                 </Link>
               </div>
 
-              <Button type="submit" text="Login" />
+              <Button
+                type="submit" 
+                text={isPending? "Logging in..." : "Login"}
+                disabled= {isPending} />
             </form>
           </div>
           <div className="flex flex-col items-center gap-5">
