@@ -45,29 +45,61 @@ const RegisterPage = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (newUser) => {
-      return api.post("/register", newUser);
-    },
-    onSuccess: (response) => {
-      alert(response.data.message || "Registration successful!");
-      navigate("/login");
-    },
-    onError: (error) => {
-      const errorMessage = error.response?.data?.message || "Something went wrong";
-      alert(errorMessage);
-    },
-  });
+  // const { mutate, isPending } = useMutation({
+  //   mutationFn: (newUser) => {
+  //     return api.post("/register", newUser);
+  //   },
+  //   onSuccess: (response) => {
+  //     alert(response.data.message || "Registration successful!");
+  //     navigate("/login");
+  //   },
+  //   onError: (error) => {
+  //     const errorMessage = error.response?.data?.message || "Something went wrong";
+  //     alert(errorMessage);
+  //   },
+  // });
 
-  const onSubmit = (data) => {
-    const payload = {
-      fullname: data.fullname,
-      email: data.email,
-      password: data.password,
-    };
+  // const onSubmit = (data) => {
+  //   const payload = {
+  //     fullname: data.fullname,
+  //     email: data.email,
+  //     password: data.password,
+  //   };
 
-    mutate(payload);
-  };
+  //   mutate(payload);
+  // };
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onSubmit = async (data) => {
+    setIsLoading(true)
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullname: data.fullname,
+          email: data.email,
+          password: data.password,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || "Registration failed")
+      }
+
+      alert(result.message || "Registration successful!")
+      navigate("/login")
+    } catch (error) {
+      alert(error.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="flex flex-row gap-10">
@@ -163,7 +195,10 @@ const RegisterPage = () => {
                 )}
               </div>
 
-              <Button type="submit" text="Register" />
+              <Button
+                type="submit" 
+                text={isLoading? "Loading..." : "Register"}
+                disabled={isLoading} />
             </form>
           </div>
           <div className="flex flex-col items-center gap-5">
