@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import api from "../lib/axios.js"
+import api from "../lib/http.js"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,58 +45,19 @@ const RegisterPage = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  // const { mutate, isPending } = useMutation({
-  //   mutationFn: (newUser) => {
-  //     return api.post("/register", newUser);
-  //   },
-  //   onSuccess: (response) => {
-  //     alert(response.data.message || "Registration successful!");
-  //     navigate("/login");
-  //   },
-  //   onError: (error) => {
-  //     const errorMessage = error.response?.data?.message || "Something went wrong";
-  //     alert(errorMessage);
-  //   },
-  // });
-
-  // const onSubmit = (data) => {
-  //   const payload = {
-  //     fullname: data.fullname,
-  //     email: data.email,
-  //     password: data.password,
-  //   };
-
-  //   mutate(payload);
-  // };
-
   const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = async (data) => {
-    setIsLoading(true)
     try {
-      const response = await fetch("/register", {
+      const result = await http("/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullname: data.fullname,
-          email: data.email,
-          password: data.password,
-        }),
+        body: data
       })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message || "Registration failed")
-      }
-
-      alert(result.message || "Registration successful!")
+      alert(result.message)
       navigate("/login")
     } catch (error) {
       alert(error.message)
-    } finally {
+    } finally{
       setIsLoading(false)
     }
   }
@@ -196,8 +157,8 @@ const RegisterPage = () => {
               </div>
 
               <Button
-                type="submit" 
-                text={isLoading? "Loading..." : "Register"}
+                type="submit"
+                text={isLoading ? "Loading..." : "Register"}
                 disabled={isLoading} />
             </form>
           </div>
