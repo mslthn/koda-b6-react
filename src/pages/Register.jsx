@@ -1,13 +1,19 @@
+import { useMutation } from "@tanstack/react-query";
+import api from "../lib/axios.js"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup';
 import Input from "../components/Input";
 import Button from "../components/Button";
+
 import logo from "../assets/icons/coffee.svg";
 import leftImage from "../assets/images/Rectangle-289.png";
 import fbLogo from "../assets/icons/facebook.svg";
 import googleLogo from "../assets/icons/google.svg";
+import profileIcon from "../assets/icons/Profile.svg"
+import mailIcon from "../assets/icons/mail.svg"
+import passwdIcon from "../assets/icons/Password.svg"
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -37,20 +43,30 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
-  }); 
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (newUser) => {
+      return api.post("/register", newUser);
+    },
+    onSuccess: (response) => {
+      alert(response.data.message || "Registration successful!");
+      navigate("/login");
+    },
+    onError: (error) => {
+      const errorMessage = error.response?.data?.message || "Something went wrong";
+      alert(errorMessage);
+    },
+  });
 
   const onSubmit = (data) => {
-    // console.log("Form:", data);
-
-    const userData = {
+    const payload = {
       fullname: data.fullname,
       email: data.email,
+      password: data.password,
     };
 
-    localStorage.setItem("registeredUser", JSON.stringify(userData));
-    alert("Registration successful! Please login.");
-
-    navigate("/login");
+    mutate(payload);
   };
 
   return (
@@ -82,7 +98,7 @@ const RegisterPage = () => {
                   type="text"
                   id="fullname"
                   placeholder="Enter Your Full Name"
-                  src="./src/assets/icons/Profile.svg"
+                  src={profileIcon}
                   alt="Profile Icon"
                   {...register("fullname")}
                 />
@@ -100,7 +116,7 @@ const RegisterPage = () => {
                   type="email"
                   id="email"
                   placeholder="Enter Your Email"
-                  src="./src/assets/icons/mail.svg"
+                  src={mailIcon}
                   alt="Mail Icon"
                   {...register("email")}
                 />
@@ -118,7 +134,7 @@ const RegisterPage = () => {
                   type="password"
                   id="password"
                   placeholder="Enter Your Password"
-                  src="./src/assets/icons/Password.svg"
+                  src={passwdIcon}
                   alt="Lock Icon"
                   {...register("password")}
                 />
@@ -136,7 +152,7 @@ const RegisterPage = () => {
                   type="password"
                   id="password"
                   placeholder="Enter Your Password Again"
-                  src="./src/assets/icons/Password.svg"
+                  src={passwdIcon}
                   alt="Lock Icon"
                   {...register("confirmPassword")}
                 />
