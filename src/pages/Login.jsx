@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useMutation } from "@tanstack/react-query";
-import api from "../lib/axios";
+import api from "../lib/http";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -34,30 +34,25 @@ const LoginPage = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (credentials) => {
-      return api.post("/login", credentials)
-    },
-    onSuccess: (response) => {
-      const { token } = response.data
+  const [isLoading, setIsLoading] = useState(false)
 
-      if (token) {
-        localStorage.setItem("token", token)
+  const onSubmit = async (data) => {
+    try {
+        const result = await http("/login", {
+            method: "POST",
+            body: data
+        })
+        
+        localStorage.setItem("token", result.token)
         localStorage.setItem("isAuthenticated", "true")
-
-        alert("Login successful!")
+        
         navigate("/")
-      }
-    },
-    onError: (error) => {
-      const errorMessage = error.response?.data?.message || "Invalid email or password"
-      alert(errorMessage)
-    },
-  })
-
-  const onSubmit = (data) => {
-    mutate(data)
-  }
+    } catch (error) {
+        alert(error.message)
+    } finally{
+      setIsLoading(false)
+    }
+}
 
   return (
     <div className="flex flex-row gap-10">
@@ -119,9 +114,9 @@ const LoginPage = () => {
               </div>
 
               <Button
-                type="submit" 
-                text={isPending? "Logging in..." : "Login"}
-                disabled= {isPending} />
+                type="submit"
+                text={isLoading ? "Logging in..." : "Login"}
+                disabled={isLoading} />
             </form>
           </div>
           <div className="flex flex-col items-center gap-5">
