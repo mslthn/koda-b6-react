@@ -1,4 +1,4 @@
-export const base_url = import.meta.env.BACKEND_URL || "http://localhost:8888"
+export const base_url = import.meta.env.VITE_BACKEND_URL
 
 export default async function http(endpoint, opts = {}) {
     const url = `${base_url}${endpoint}`
@@ -16,8 +16,8 @@ export default async function http(endpoint, opts = {}) {
 
     const response = await fetch(url, {
         method: opts.method || "GET",
+        headers: headers,
         body: opts.body ? JSON.stringify(opts.body) : undefined,
-        headers: headers
     })
     const result = await response.json()
 
