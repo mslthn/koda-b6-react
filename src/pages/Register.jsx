@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import api from "../lib/http.js"
+import http from "../lib/http.js"
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -52,13 +52,18 @@ const RegisterPage = () => {
     try {
       const result = await http("/register", {
         method: "POST",
-        body: data
+        body: {
+          fullname: data.fullname,
+          email: data.email,
+          password: data.password,
+        },
       })
-      alert(result.message)
+      alert(result.message || "Register successful")
       navigate("/login")
     } catch (error) {
+      console.log(error)
       alert(error.message)
-    } finally{
+    } finally {
       setIsLoading(false)
     }
   }
